@@ -1,9 +1,17 @@
-import postModel from '../Models/postModel.js'
+import postModel from "../Models/postModel.js";
 
 // Create Post
 export const createPost = async (req, res) => {
-  // const { userId, desc, image, video, hastags, status } = req.body
+  const { title, desc, category, imageUrl } = req.body;
   try {
+    const newPost = new postModel({
+      title,
+      desc,
+      category,
+      imageUrl,
+    });
+    await newPost.save();
+    res.status(200).json({ message: "Thêm tin thành công" });
     // if (video) {
     //   const result = await cloudinary.uploader.upload(video, {
     //     resource_type: 'video',
@@ -38,10 +46,15 @@ export const createPost = async (req, res) => {
     //   await newPost.save()
     //   res.status(200).json(newPost)
     // }
-    res.status(200).json({message: "Hello Tino"})
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-}
-
-
+};
+export const getPost = async (req, res) => {
+  try {
+    const listPost = await postModel.find();
+    res.status(200).json(listPost);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};

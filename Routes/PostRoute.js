@@ -1,12 +1,13 @@
 import express from 'express'
 import {
-  createPost,
+  createPost, getPost,
  
 } from '../Controller/PostController.js'
 
 const router = express.Router()
 
-router.get('/', createPost)
+router.post('/create', createPost)
+router.get('/', getPost)
 
 
 export default router
